@@ -1,4 +1,6 @@
-﻿namespace TimeLogs.API.Presentation.Extensions;
+﻿using TimeLogs.API.Application;
+
+namespace TimeLogs.API.Presentation.Extensions;
 
 using System.Globalization;
 using System.Reflection;
@@ -85,7 +87,7 @@ public static class WebApplicationBuilderExtensions
         #region Project Dependencies
 
         _ = builder.Services.AddInfrastructure();
-       // _ = builder.Services.AddApplication();
+        _ = builder.Services.AddApplication(builder.Configuration);
 
         #endregion Project Dependencies
 

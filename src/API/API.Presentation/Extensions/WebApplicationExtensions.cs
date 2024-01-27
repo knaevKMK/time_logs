@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using Serilog;
+using TimeLogs.API.Presentation.Endpoints;
 
 namespace TimeLogs.API.Presentation.Extensions;
 
@@ -39,7 +40,7 @@ public static  class WebApplicationExtensions
 
      #region MinimalApi
 
-     // _ = app.MapVersionEndpoints();
+     _ = app.MapUsersEndpoints();
      // _ = app.MapAuthorEndpoints();
      // _ = app.MapMovieEndpoints();
      // _ = app.MapReviewEndpoints();
