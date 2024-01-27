@@ -1,10 +1,13 @@
 using Serilog;
+using TimeLogs.API.Presentation.Extensions;
 
 var builder = WebApplication
-    .CreateBuilder(args);
+    .CreateBuilder(args)
+    .ConfigureApplicationBuilder();
 
 var app = builder
-    .Build();
+    .Build()
+    .ConfigureApplication();
 
 try
 {
