@@ -1,3 +1,5 @@
-﻿namespace TimeLogs.API.Application.Users.Entities;
+﻿using TimeLogs.API.Application.TimeLogs.Entities;
 
-public readonly record struct User(Guid Id, string Firstname, string Lastname, string Email);
+namespace TimeLogs.API.Application.Users.Entities;
+
+public readonly record struct User(Guid Id, string Firstname, string Lastname, string Email, ICollection<TimeLog> TimeLogs);
