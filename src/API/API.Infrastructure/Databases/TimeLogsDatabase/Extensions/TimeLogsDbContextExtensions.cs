@@ -30,15 +30,29 @@ internal static class TimeLogsDbContextExtensions
 
         context.AddRange(projects);
 
-        var timeLogFaker = new Faker<TimeLog>()
-            .RuleFor(t => t.UserId, f => f.PickRandom(users).Id)
-            .RuleFor(t => t.ProjectId, f => f.PickRandom(projects).Id)
-            .RuleFor(t => t.Date, f => f.Date.Recent())
-            .RuleFor(t => t.HoursWorked, f => f.Random.Double(0.25, 8.00));
+        var _random = new Random();
+        foreach (var user in users)
+        {
+            var numberOfEntries = _random.Next(1, 21);
 
-        var timeLogs = timeLogFaker.Generate(100);
+            for (int i = 0; i < numberOfEntries; i++)
+            {
+                var project = projects[_random.Next(projects.Count)];
 
-        context.AddRange(timeLogs);
+                // Ensure that hours worked per entry do not exceed 8 working hours per day
+                var maxHoursPerDay = 8.00f;
+                var remainingHours = maxHoursPerDay;
+
+                // Generate random hours within the limit
+                var hoursWorked = (float)(_random.NextDouble() * (Math.Min(remainingHours, 8.00 - 0.25)) + 0.25);
+
+                // Update remaining hours
+                remainingHours -= hoursWorked;
+
+                context.TimeLogs.Add(new TimeLog
+                    { UserId = user.Id, ProjectId = project.Id, Date = DateTime.Now, HoursWorked = hoursWorked });
+            }
+        }
 
         _ = context.SaveChanges();
 

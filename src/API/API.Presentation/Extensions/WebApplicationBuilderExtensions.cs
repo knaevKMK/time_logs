@@ -61,7 +61,7 @@ public static class WebApplicationBuilderExtensions
                     {
                         Name = "Time Logs API",
                         Email = "vladimirpet91@gmail.com",
-                        Url = new Uri("")
+                        Url = new Uri("https://github.com/vladimirpetukhov/time_logs")
                     },
                     License = new OpenApiLicense
                     {
@@ -71,9 +71,6 @@ public static class WebApplicationBuilderExtensions
                     TermsOfService = new Uri("https://vladimirpetukhov.github.io/resume/")
                 });
 
-            var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-
-            options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
             options.DocInclusionPredicate((name, api) => true);
         });
 
