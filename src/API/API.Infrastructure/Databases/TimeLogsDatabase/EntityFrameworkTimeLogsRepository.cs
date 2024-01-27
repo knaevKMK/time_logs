@@ -1,11 +1,13 @@
-﻿using AutoMapper;
-using TimeLogs.API.Infrastructure.Databases.TimeLogsDatabase.Extensions;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace TimeLogs.API.Infrastructure.Databases.TimeLogsDatabase;
 
+using AutoMapper;
+using Extensions;
 using Application.Users;
 using Application.Projects;
 using Application.TimeLogs;
+using ApplicationUser = Application.Users.Entities.User;
 
 internal class EntityFrameworkTimeLogsRepository : IUsersRepository, IProjectsRepository, ITimeLogsRepository
 {
@@ -26,4 +28,15 @@ internal class EntityFrameworkTimeLogsRepository : IUsersRepository, IProjectsRe
             _ = this.context.AddData();
         }
     }
+
+    #region Users
+
+    public virtual async Task<List<ApplicationUser>> GetUsers(CancellationToken cancellationToken)
+    {
+        var users = await this.context.Users.Include(t => t.TimeLogs).AsNoTracking().ToListAsync(cancellationToken);
+
+        return this.mapper.Map<List<ApplicationUser>>(users);
+    }
+
+    #endregion
 }
